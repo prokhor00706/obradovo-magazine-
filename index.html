@@ -1,0 +1,446 @@
+
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#eeeae1">
+<title>ОБРАДОВО — цифровые истории</title>
+<style>
+@font-face{font-family:Stolzl;src:url('stolzl-regular.otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:Stolzl;src:url('stolzl-light.otf') format('opentype');font-weight:300;font-display:swap}
+@font-face{font-family:Ralewe;src:url('zt-neue-ralewe-regular.otf') format('opentype');font-weight:400;font-display:swap}
+:root{--paper:#f0ede5;--ink:#252823;--stone:#b9b8a9;--olive:#667361;--line:#ccc7b9}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Stolzl,Arial,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%;height:auto}
+button:focus-visible,a:focus-visible{outline:2px solid #a26f41;outline-offset:5px}
+
+/* Заставка */
+.intro{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;background:#171d1b;color:#eae7dc;overflow:hidden;transition:opacity .85s ease,visibility .85s ease}
+.intro.done{opacity:0;visibility:hidden;pointer-events:none}
+.intro:before{content:'';position:absolute;width:140vw;height:1px;background:#728b7e;left:-20vw;top:22%;transform:rotate(-27deg);opacity:.23}
+.intro:after{content:'';position:absolute;width:70vmax;height:70vmax;border:1px solid #e6dec91c;border-radius:50%;left:58%;top:42%;transform:translate(-50%,-50%);animation:orb 5s ease-in-out infinite alternate}
+@keyframes orb{to{transform:translate(-48%,-48%) scale(1.08)}}
+.intro-main{width:100%;padding:0 7vw;position:relative;z-index:1}
+.intro-index{display:flex;justify-content:space-between;font-size:clamp(9px,2.2vw,12px);letter-spacing:.18em;color:#bebeb0;text-transform:uppercase;margin-bottom:clamp(25px,8vh,75px)}
+.intro-word{font-weight:300;font-size:clamp(39px,11vw,155px);line-height:1.05;letter-spacing:-.064em;white-space:nowrap;transform:translateY(20px);opacity:0;animation:wordEnter 1s .1s cubic-bezier(.2,.7,.2,1) forwards}
+.intro-word span{color:#b9c1af}
+@keyframes wordEnter{to{transform:translateY(0);opacity:1}}
+.intro-bottom{margin-top:clamp(32px,11vh,100px);display:grid;grid-template-columns:1fr auto;align-items:end;gap:20px}
+.intro-progress{height:1px;background:#777e76;position:relative;overflow:hidden}
+.intro-progress:before{content:'';position:absolute;left:0;top:0;bottom:0;width:100%;background:#f1eadb;transform:translateX(-100%);animation:load 2.5s .15s linear forwards}
+@keyframes load{to{transform:translateX(0)}}
+.intro-sub{font-size:10px;letter-spacing:.17em;color:#bfc0b6;margin-top:14px;text-transform:uppercase}
+.intro-skip{color:#e8e8dc;background:none;border:0;border-bottom:1px solid #777e76;padding:3px 0 8px;cursor:pointer;font-size:11px;letter-spacing:.12em}
+
+/* Навигация */
+.head{position:sticky;z-index:30;top:0;height:66px;padding:0 clamp(18px,5vw,70px);display:flex;align-items:center;justify-content:space-between;background:rgba(240,237,229,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.brand{font-size:14px;letter-spacing:.22em;font-weight:400}
+.head-right{display:flex;align-items:center;gap:22px}
+.edition{font-size:10px;letter-spacing:.14em;color:#6b6f66}
+.menu-btn{border:1px solid #807f74;background:transparent;color:var(--ink);border-radius:100px;padding:9px 15px;font-size:10px;letter-spacing:.13em;cursor:pointer}
+.menu{position:fixed;z-index:40;right:15px;top:77px;background:#202820;color:#eee;padding:22px 25px;width:min(340px,calc(100vw - 30px));box-shadow:0 10px 45px #0004;opacity:0;visibility:hidden;transform:translateY(-6px);transition:.25s}
+.menu.open{opacity:1;visibility:visible;transform:none}
+.menu a{display:block;font-family:Ralewe,serif;font-size:25px;padding:13px 0;border-bottom:1px solid #6d766b}
+.menu-foot{font-size:10px;letter-spacing:.1em;margin-top:20px;color:#b9c0b5}
+
+/* Первый экран */
+.hero{position:relative;min-height:calc(100svh - 66px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);align-items:center;gap:clamp(20px,5vw,80px);padding:clamp(40px,6vw,96px) max(6vw,20px)}
+.hero-kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#657061}
+.hero-title{margin:38px 0 22px;font-family:Ralewe,Georgia,serif;font-weight:400;font-size:clamp(54px,9vw,135px);letter-spacing:-.05em;line-height:.92}
+.hero-title em{font-style:normal;color:#7f8a7b}
+.hero-p{max-width:390px;font-size:clamp(13px,1.2vw,17px);line-height:1.85;font-weight:300;color:#50564f}
+.go{margin-top:42px;background:transparent;border:0;border-bottom:1px solid #566455;display:inline-flex;align-items:center;gap:30px;padding:8px 0;letter-spacing:.15em;font-size:11px;color:#303e33;cursor:pointer}
+.go .arr{font-size:25px;line-height:1}
+.hero-art{position:relative;display:flex;justify-content:center;align-items:center;min-width:0}
+.hero-art img{width:min(100%,450px);height:auto;box-shadow:18px 20px 0 #d9d7cb;object-fit:contain}
+.hero-stamp{position:absolute;right:-2%;bottom:3%;font-size:10px;letter-spacing:.2em;writing-mode:vertical-rl;color:#555d52}
+.rule{border:0;border-top:1px solid var(--line);margin:0 clamp(18px,6vw,100px)}
+.meta-row{display:flex;justify-content:space-between;gap:15px;padding:24px max(6vw,20px);font-size:10px;letter-spacing:.12em;color:#61675f;text-transform:uppercase}
+
+/* Тёмный переход */
+.chapter{background:#222b26;color:#f0eee4;padding:clamp(85px,15vh,150px) 7vw;min-height:80vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.chapter-no{font-size:11px;letter-spacing:.28em;color:#afb8ab}
+.chapter-title{font-family:Ralewe,Georgia,serif;font-weight:400;font-size:clamp(53px,11vw,155px);line-height:1.02;letter-spacing:-.055em;margin:50px 0 25px;max-width:1000px}
+.chapter-title .outline{color:transparent;-webkit-text-stroke:1px #aeb7ac}
+.chapter-caption{font-size:12px;max-width:460px;line-height:2;color:#bdc4b9;font-weight:300}
+.chapter-orb{position:absolute;right:-20vw;top:-18vw;width:65vw;height:65vw;border-radius:50%;border:1px solid #cdd4c42b;pointer-events:none;box-shadow:0 0 0 5vw #ffffff05,0 0 0 10vw #ffffff05}
+
+/* Фотографии и статьи */
+.story{padding:clamp(65px,9vw,130px) 5vw}
+.eyebrow{display:flex;justify-content:space-between;gap:10px;font-size:10px;letter-spacing:.19em;text-transform:uppercase;color:#777c73;margin-bottom:40px}
+.story-heading{font-family:Ralewe,Georgia,serif;font-size:clamp(43px,8vw,115px);font-weight:400;line-height:1.08;letter-spacing:-.04em;margin:0 0 45px;max-width:900px}
+.story-intro{font-family:Ralewe,Georgia,serif;max-width:620px;font-size:clamp(19px,2.8vw,30px);line-height:1.55;margin:0 auto clamp(65px,11vw,145px);color:#414940}
+.photo-big{width:min(1100px,100%);margin:0 auto;position:relative}
+.photo-big img{width:100%;height:auto;object-fit:contain}
+.photo-big figcaption,.photo-split figcaption{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#747970;margin-top:17px;line-height:1.7}
+.photo-big .index-tag{position:absolute;top:18px;left:18px;font-size:11px;letter-spacing:.18em;padding:11px;background:#eeeae2ed}
+.copy{font-size:clamp(14px,1.5vw,17px);line-height:2;max-width:590px;margin:90px auto 110px;font-weight:300;color:#414940}
+.copy p{margin:0 0 1.2em}
+.pullquote{font-family:Ralewe,Georgia,serif;font-size:clamp(40px,7.2vw,105px);line-height:1.16;letter-spacing:-.035em;max-width:1100px;margin:100px auto;padding:20px 0 20px 6vw;border-left:1px solid #8b9a8e}
+.pullquote small{font:11px Stolzl,Arial,sans-serif;display:block;letter-spacing:.17em;margin-top:35px;color:#747a70}
+.photo-split{display:grid;grid-template-columns:1fr .78fr;gap:clamp(25px,8vw,150px);align-items:end;max-width:1200px;margin:0 auto 100px}
+.photo-split figure{margin:0}
+.photo-split figure:nth-child(2){padding-bottom:4vw}
+.photo-split img{width:100%;height:auto;object-fit:contain}
+.side-note{font:14px/1.9 Stolzl,Arial,sans-serif;font-weight:300;color:#545c52;max-width:220px;margin:22px 0 0}
+
+/* Закреплённая сцена */
+.immersive{background:#d6d8d0}
+.immersive-kicker{padding:80px 7vw 30px;font-size:10px;letter-spacing:.25em;color:#49564b}
+.immersive-track{height:190vh;position:relative}
+.immersive-sticky{position:sticky;top:66px;height:calc(100svh - 66px);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:25px 5vw}
+.immersive-image{position:relative;width:min(730px,100%);max-height:65vh;display:flex;align-items:center;justify-content:center;will-change:transform}
+.immersive-image img{max-height:65vh;width:100%;object-fit:contain;filter:drop-shadow(0 15px 20px #33403224)}
+.immersive-text{position:absolute;left:6vw;bottom:8vh;font-family:Ralewe,Georgia,serif;font-size:clamp(40px,8.5vw,120px);line-height:.95;letter-spacing:-.045em;max-width:760px;color:#263c2e;pointer-events:none}
+.immersive-counter{position:absolute;right:5vw;top:24px;font-size:11px;letter-spacing:.18em;color:#56665b}
+.immersive-outro{padding:60px 7vw 120px;max-width:760px;font-family:Ralewe,Georgia,serif;font-size:clamp(22px,3vw,39px);line-height:1.5;color:#384a3e}
+
+/* Завершение */
+.final{background:#eeeae1;padding:clamp(80px,14vw,180px) 6vw}
+.final-head{font-family:Ralewe,Georgia,serif;font-size:clamp(55px,10vw,150px);line-height:1;letter-spacing:-.05em;margin:0 0 50px}
+.final-photo{width:min(920px,100%);margin:0 auto}
+.final-photo img{width:100%;object-fit:contain;height:auto}
+.final-motto{padding:100px 0 30px;max-width:850px;margin:0 auto;font-family:Ralewe,Georgia,serif;font-size:clamp(22px,4.3vw,57px);line-height:1.34}
+.ending{display:flex;justify-content:space-between;align-items:center;gap:18px;border-top:1px solid #99998f;padding-top:25px;font-size:10px;letter-spacing:.14em}
+.backtop{border:0;background:transparent;font:inherit;letter-spacing:inherit;cursor:pointer}
+
+/* Мягкие анимации */
+.reveal{opacity:1;transform:none}
+.motion .reveal{opacity:0;transform:translate3d(0,48px,0);transition:opacity 1.15s cubic-bezier(.22,1,.36,1),transform 1.15s cubic-bezier(.22,1,.36,1)}
+.motion .reveal.on{opacity:1;transform:none}
+.motion .reveal.delayed{transition-delay:.15s}
+.photo-reveal{overflow:hidden}
+.motion .photo-reveal img{transform:scale(1.045);transition:transform 1.5s cubic-bezier(.22,1,.36,1)}
+.motion .photo-reveal.on img{transform:scale(1)}
+.progress-top{position:fixed;top:0;left:0;height:2px;width:0;background:#8b9c8b;z-index:35;pointer-events:none}
+
+@media(max-width:760px){
+.head{height:58px}
+.edition{display:none}
+.head-right{gap:8px}
+.menu{top:66px}
+.hero{grid-template-columns:1fr;min-height:auto;padding:42px 7vw 75px;gap:60px}
+.hero-title{font-size:clamp(65px,15vw,110px);margin:25px 0 20px}
+.hero-p{font-size:13px}
+.hero-art img{width:min(79vw,355px);box-shadow:12px 12px 0 #d9d7cb}
+.hero-stamp{right:-1%}
+.chapter{min-height:65vh}
+.chapter-title{font-size:clamp(55px,12.2vw,95px)}
+.story{padding:65px 6vw}
+.story-intro{margin-bottom:75px}
+.copy{margin:72px auto 75px}
+.photo-split{grid-template-columns:1fr;gap:65px}
+.photo-split figure:nth-child(2){width:80%;margin-left:auto}
+.pullquote{margin:80px auto}
+.immersive-sticky{top:58px;height:calc(100svh - 58px)}
+.immersive-image{width:100%;max-height:57vh}
+.immersive-image img{max-height:57vh}
+.immersive-text{bottom:7vh;font-size:clamp(41px,11vw,75px)}
+.immersive-track{height:155vh}
+.final{padding:85px 6vw}
+.final-motto{padding:60px 0}
+.intro-word{font-size:clamp(37px,10vw,65px)}
+.intro-main{padding:0 7vw}
+.intro-bottom{grid-template-columns:1fr auto}
+}
+@media(prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+.intro:after,.intro-word,.intro-progress:before{animation:none}
+.intro-word{opacity:1;transform:none}
+.motion .reveal{opacity:1;transform:none}
+.motion .photo-reveal img{transform:none}
+}
+</style>
+</head>
+
+<body>
+<div class="intro" id="intro" aria-label="Заставка ОБРАДОВО">
+  <div class="intro-main">
+    <div class="intro-index">
+      <span>ЦИФРОВОЙ ЖУРНАЛ / 2026</span>
+      <span>01 — ∞</span>
+    </div>
+    <div class="intro-word">ОБРАДОВО<span>.</span></div>
+    <div class="intro-bottom">
+      <div>
+        <div class="intro-progress"></div>
+        <div class="intro-sub">МЕСТО · ПАМЯТЬ · БУДУЩЕЕ</div>
+      </div>
+      <button class="intro-skip" id="skip">ПРОПУСТИТЬ ↗</button>
+    </div>
+  </div>
+</div>
+
+<div class="progress-top" id="progress"></div>
+
+<header class="head">
+  <a class="brand" href="#home" aria-label="В начало">ОБРАДОВО</a>
+  <div class="head-right">
+    <span class="edition">ЦИФРОВОЕ ИЗДАНИЕ · 2026</span>
+    <button class="menu-btn" id="menuToggle" aria-expanded="false">РАЗДЕЛЫ +</button>
+  </div>
+</header>
+
+<nav class="menu" id="menu">
+  <a href="#home">Начало</a>
+  <a href="#chapter">История</a>
+  <a href="#photos">Архитектура</a>
+  <a href="#immersive">Место</a>
+  <a href="#ending">Финал</a>
+  <div class="menu-foot">ОБРАДОВО / DIGITAL EDITION</div>
+</nav>
+
+<main>
+<section class="hero" id="home">
+  <div>
+    <div class="hero-kicker reveal">Не просто журнал — пространство истории</div>
+    <h1 class="hero-title reveal delayed">
+      Место,<br>которое<br><em>помнит.</em>
+    </h1>
+    <p class="hero-p reveal delayed">
+      Цифровая история Обрадово. Фотографии, архитектура,
+      следы времени и люди, сохраняющие память о месте.
+    </p>
+    <button class="go reveal" data-jump="chapter">
+      ПОГРУЗИТЬСЯ В ИСТОРИЮ <span class="arr">↓</span>
+    </button>
+  </div>
+  <div class="hero-art reveal">
+    <img src="obradovo-cover.jpg" alt="Оригинальная обложка журнала Обрадово 2026">
+    <span class="hero-stamp">ИЗДАНИЕ № 01 — 2026</span>
+  </div>
+</section>
+
+<hr class="rule">
+<div class="meta-row">
+  <span>001 / ПРОЛОГ</span>
+  <span>ЛИСТАЙТЕ ВНИЗ ↓</span>
+</div>
+
+<section class="chapter" id="chapter">
+  <div class="chapter-orb"></div>
+  <div class="chapter-no reveal">01 / ИСТОРИЯ МЕСТА</div>
+  <h2 class="chapter-title reveal">
+    Время<br>оставляет <span class="outline">следы.</span>
+  </h2>
+  <p class="chapter-caption reveal delayed">
+    Это демонстрация цифровой подачи материалов журнала:
+    вертикальный рассказ, самостоятельная типографика и фотография,
+    которая живёт отдельно от печатного разворота.
+  </p>
+</section>
+
+<section class="story" id="photos">
+  <div class="eyebrow reveal">
+    <span>01 / ОБРАДОВО</span>
+    <span>АРХИТЕКТУРА И ПАМЯТЬ</span>
+  </div>
+  <h2 class="story-heading reveal">
+    Здание как<br>свидетель<br>времени.
+  </h2>
+  <p class="story-intro reveal">
+    То, что осталось, говорит с нами через фактуру стен,
+    пустые окна и тишину пространства.
+  </p>
+
+  <figure class="photo-big photo-reveal reveal">
+    <span class="index-tag">ФОТО / 001</span>
+    <img src="obradovo-architecture-01.jpg" alt="Историческое здание из журнала Обрадово" loading="eager">
+    <figcaption>Фотография из печатного издания «Обрадово»</figcaption>
+  </figure>
+
+  <div class="copy reveal">
+    <p>
+      В печатной версии фотография живёт внутри разворота.
+      Здесь мы даём ей отдельное пространство и сохраняем
+      возможность рассмотреть архитектуру, не отвлекаясь
+      на оформление страницы.
+    </p>
+    <p>
+      Этот фрагмент — демонстрация дизайна.
+      Окончательный текст статьи будет перенесён
+      из оригинального журнала.
+    </p>
+  </div>
+
+  <blockquote class="pullquote reveal">
+    «Память места<br>живёт в деталях».
+    <small>РЕДАКЦИОННЫЙ ПРИЁМ / ДЕМО-ТЕКСТ</small>
+  </blockquote>
+
+  <div class="photo-split">
+    <figure class="photo-reveal reveal">
+      <img src="obradovo-architecture-02.jpg" alt="Историческое здание и человек в ландшафте Обрадово" loading="lazy">
+      <figcaption>02 / Фрагменты истории</figcaption>
+    </figure>
+    <figure class="photo-reveal reveal delayed">
+      <img src="obradovo-landscape-01.jpg" alt="Старинное кирпичное здание Обрадово" loading="lazy">
+      <figcaption>03 / Архитектурное наследие</figcaption>
+      <p class="side-note">
+        Отдельные кадры вместо готовых страниц —
+        другая глубина восприятия.
+      </p>
+    </figure>
+  </div>
+</section>
+
+<section class="immersive" id="immersive">
+  <div class="immersive-kicker reveal">02 / МЕСТО И ПРОСТРАНСТВО</div>
+  <div class="immersive-track" id="track">
+    <div class="immersive-sticky">
+      <div class="immersive-counter">ПРОКРУТИТЕ ВНИЗ ↓</div>
+      <div class="immersive-image" id="stickyPicture">
+        <img src="obradovo-landscape-02.jpg" alt="Ландшафт Обрадово из журнала">
+      </div>
+      <div class="immersive-text" id="stickyText">
+        В каждом<br>месте —<br>история.
+      </div>
+    </div>
+  </div>
+  <div class="immersive-outro reveal">
+    Здесь изображение ненадолго остаётся в кадре,
+    а история продолжается вместе с движением страницы.
+    Без резких 3D-поворотов и искусственной прокрутки.
+  </div>
+</section>
+
+<section class="final" id="ending">
+  <div class="eyebrow reveal">
+    <span>03 / ПОСЛЕСЛОВИЕ</span>
+    <span>ОБРАДОВО — 2026</span>
+  </div>
+  <h2 class="final-head reveal">
+    Между<br>прошлым<br>и будущим.
+  </h2>
+  <figure class="final-photo photo-reveal reveal">
+    <img src="obradovo-cover.jpg" alt="Обложка оригинального издания Обрадово" loading="lazy">
+  </figure>
+  <p class="final-motto reveal">
+    Цифровой журнал может сохранить характер печатного издания —
+    и при этом рассказать историю по-новому.
+  </p>
+  <footer class="ending">
+    <span>ОБРАДОВО / DIGITAL PROTOTYPE</span>
+    <button class="backtop" data-jump="home">В НАЧАЛО ↑</button>
+  </footer>
+</section>
+</main>
+
+<script>
+(() => {
+  const intro = document.getElementById('intro');
+  const skip = document.getElementById('skip');
+  let closed = false;
+
+  function endIntro() {
+    if (closed) return;
+    closed = true;
+    intro.classList.add('done');
+    document.body.style.overflow = '';
+    setTimeout(() => { intro.hidden = true; }, 950);
+  }
+
+  document.body.style.overflow = 'hidden';
+  skip.addEventListener('click', endIntro);
+  setTimeout(endIntro, 2700);
+
+  window.addEventListener('pageshow', e => {
+    if (e.persisted) endIntro();
+  });
+
+  const menu = document.getElementById('menu');
+  const toggle = document.getElementById('menuToggle');
+
+  const closeMenu = () => {
+    menu.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  };
+
+  toggle.addEventListener('click', () => {
+    const isOpen = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  menu.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', closeMenu)
+  );
+
+  document.querySelectorAll('[data-jump]').forEach(button =>
+    button.addEventListener('click', () => {
+      document.getElementById(button.dataset.jump)
+        .scrollIntoView({ behavior: 'smooth', block: 'start' });
+    })
+  );
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if ('IntersectionObserver' in window && !reduced) {
+    document.body.classList.add('motion');
+    const targets = [...document.querySelectorAll('.reveal')];
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('on');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: .08,
+      rootMargin: '0px 0px -35px 0px'
+    });
+
+    targets.forEach(el => io.observe(el));
+
+    requestAnimationFrame(() => {
+      targets
+        .filter(el => el.getBoundingClientRect().top < innerHeight * .9)
+        .forEach(el => el.classList.add('on'));
+    });
+  }
+
+  const line = document.getElementById('progress');
+  const track = document.getElementById('track');
+  const pic = document.getElementById('stickyPicture');
+  const text = document.getElementById('stickyText');
+  let pending = false;
+
+  function frame() {
+    pending = false;
+    const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    line.style.width = (scrollY / max * 100).toFixed(2) + '%';
+
+    if (reduced) return;
+
+    const rect = track.getBoundingClientRect();
+    const distance = Math.max(1, track.offsetHeight - innerHeight);
+    const phase = Math.max(0, Math.min(1, -rect.top / distance));
+
+    pic.style.transform =
+      `translate3d(0,${(phase - .5) * -12}px,0) scale(${(1 + phase * .035).toFixed(3)})`;
+
+    text.style.transform =
+      `translate3d(0,${(1 - phase) * 25}px,0)`;
+
+    text.style.opacity = String(.6 + phase * .4);
+  }
+
+  function onScroll() {
+    if (!pending) {
+      pending = true;
+      requestAnimationFrame(frame);
+    }
+  }
+
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>

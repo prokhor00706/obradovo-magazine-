@@ -1,2 +1,0 @@
-# obradovo-magazine-
-Architecture magazine 
